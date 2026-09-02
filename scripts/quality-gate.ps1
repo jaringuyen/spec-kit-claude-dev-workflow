@@ -1,4 +1,4 @@
-$solution = ".\HelloWorldApi.sln"
+$solution = "HelloWorldApi.sln"
 
 function Run-Step {
     param(
