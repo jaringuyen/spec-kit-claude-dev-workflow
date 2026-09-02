@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    nodejs \
+    npm \
+    python3 \
+    python3-pip \
+    pipx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Claude Code
+RUN npm install -g @anthropic-ai/claude-code
+
+# Spec Kit
+RUN pipx install specify-cli
+ENV PATH="/root/.local/bin:$PATH"
+
+WORKDIR /workspace

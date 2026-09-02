@@ -1,0 +1,11 @@
+{
+  "name": "SpecKit Claude Dev",
+  "build": {
+    "dockerfile": "../Dockerfile.dev"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=claude-config,target=/root/.claude,type=volume"
+  ]
+}
