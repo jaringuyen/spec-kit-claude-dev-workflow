@@ -1,12 +1,12 @@
 # AI-Assisted Software Development with Human Control
 
-A practical reference showing how an experienced software team can use AI to deliver more software while keeping human control over requirements, architecture, quality and production.
+A practical reference showing how an experienced software team can use AI to deliver more software while keeping human control over requirements, architecture and quality.
 
 ## The Idea
 
 AI can now perform a significant amount of software implementation work.
 
-The opportunity is not simply to ask AI to build software from a prompt. The challenge is to place AI inside a controlled engineering process where requirements are clear, quality is independently verified and humans remain accountable for important decisions.
+The opportunity is not simply to ask AI to build software from a prompt. The challenge is to place AI inside a controlled engineering process where requirements are clear, engineering standards are enforced, quality is independently verified and humans remain accountable for important decisions.
 
 This project demonstrates that process.
 
@@ -21,15 +21,13 @@ Human approves HOW to build it
         ↓
 AI writes and tests the code
         ↓
-Automated Quality Gates
+Local Quality Gate
         ↓
-AI Pre-review
+Pull Request
         ↓
-Human Final Review
+Independent CI Quality Gate
         ↓
-Deploy & Verify
-        ↓
-Production
+Human Merge Decision
 ```
 
 ## Business Goal
@@ -40,7 +38,7 @@ The question this project explores is:
 
 The objective is not to remove developers or human accountability.
 
-The objective is to increase the leverage of experienced people by allowing AI to handle more coding, testing and routine review work.
+The objective is to increase the leverage of experienced people by allowing AI to handle more coding, testing and routine implementation work.
 
 ## What Humans Still Control
 
@@ -53,29 +51,28 @@ Humans remain responsible for the decisions that matter:
 - Is the implementation ready to merge?
 - Is the software ready for production?
 
-AI can propose and implement. Humans approve.
+AI can propose and implement. Humans remain accountable for approval.
 
 ## How Quality Is Protected
 
 AI-generated code must pass the same engineering controls as human-written code.
 
-This reference workflow includes:
+This reference workflow currently demonstrates:
 
-- defined engineering and coding standards
+- defined engineering constitution and coding standards
 - test-first development
 - automated unit and integration tests
-- local quality gates
-- independent CI validation
-- AI-assisted code pre-review
-- human code review
-- controlled deployment
-- post-deployment smoke/E2E testing
+- local quality gate
+- independent GitHub CI validation
+- pull-request-based development
+- protected default branch
+- human-controlled merge
 
-A coding agent cannot simply declare that its work is complete. The repository and CI pipeline independently verify it.
+A coding agent cannot simply declare that its work is complete.
+
+The local quality gate verifies the work before submission, and GitHub CI independently repeats the checks before the change can be merged.
 
 ## Technology Used
-
-The reference implementation uses three main tools.
 
 ### Spec Kit
 
@@ -87,15 +84,15 @@ This reduces the risk of asking an AI coding agent to work from an ambiguous pro
 
 Claude Code acts as the AI implementation partner.
 
-It reads the approved specification and engineering rules, writes tests, implements code, runs quality checks and assists with code review.
+It reads the approved specification and engineering rules, writes tests, implements code and runs the local quality gate.
 
 ### Docker
 
 Docker provides a consistent and isolated development environment.
 
-Every developer receives the same versions of Claude Code, Spec Kit, .NET and other development tools without having to configure them individually on their computer.
+Every developer receives the same development toolchain without having to install and configure Claude Code, Spec Kit, .NET and supporting tools individually.
 
-This also limits the AI coding environment to the project workspace rather than giving it unrestricted access to the developer's machine: SECURITY, SECURITY, SECURITY!!!
+It also provides an important security boundary: the AI coding environment operates inside the development container and project workspace rather than directly in the developer's host environment.
 
 ## Reference Application
 
@@ -103,7 +100,7 @@ The repository contains a deliberately simple **Hello World REST API**.
 
 The application itself is not the point.
 
-Its purpose is to make the complete engineering workflow easy to understand, test and reproduce before applying the same process to real business applications.
+Its purpose is to make the engineering workflow easy to understand, test and reproduce before applying the same approach to real business applications.
 
 ## Development Workflow
 
@@ -124,20 +121,21 @@ Claude Code
   • Refactor
     ↓
 Local Quality Gate
+  • Format
+  • Build
+  • Tests
+    ↓
+Feature Branch
     ↓
 Pull Request
     ↓
-Independent CI Quality Gate
+GitHub CI Quality Gate
     ↓
-AI Pre-review
+Protected Default Branch
     ↓
-Human Code Review
+Human Merge Decision
     ↓
-Deploy to Dev/Test
-    ↓
-Smoke / E2E Verification
-    ↓
-Production
+main
 ```
 
 ## Current Status
@@ -148,24 +146,47 @@ Implemented:
 - engineering constitution
 - enforced coding standards
 - Claude Code development rules
+- test-first development
 - isolated Docker development environment
 - reproducible VS Code Dev Container
 - local automated quality gate
+- GitHub CI quality gate
+- pull-request workflow
+- protected default branch
+- human-controlled merge
 - Hello World reference API
 
-Being added:
+## Optional Production Extension
 
-- GitHub CI
-- automatic AI pull-request pre-review
-- protected branch and human approval
-- Dev/Test deployment
-- post-deployment smoke/E2E testing
-- production deployment
+The same workflow can be extended beyond merge to include:
+
+```text
+main
+    ↓
+Deploy to TEST
+    ↓
+Smoke / E2E Verification
+    ↓
+Human Production Approval
+    ↓
+Promote the Same Build
+    ↓
+Production
+```
+
+Future extensions may also demonstrate:
+
+- human-triggered AI pull-request pre-review
 - Jira requirement integration
+- automatic TEST deployment
+- post-deployment smoke/E2E testing
+- controlled production promotion
+
+These are intentionally outside the initial reference implementation so that the core workflow remains simple and inexpensive to reproduce.
 
 ## Try It
 
-Developers can run the complete environment on a clean Windows or macOS computer.
+Developers can run the complete development environment on a clean Windows or macOS computer.
 
 See **[QUICKSTART.md](QUICKSTART.md)**.
 
